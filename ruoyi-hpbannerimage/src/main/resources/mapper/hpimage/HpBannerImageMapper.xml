@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.hpimage.mapper.HpBannerImageMapper">
+
+    <resultMap type="HpBannerImage" id="HpBannerImageResult">
+        <result property="id" column="id"/>
+        <result property="url" column="url"/>
+    </resultMap>
+
+    <sql id="selectHpBannerImageVo">
+        select id, url
+        from hp_banner_image
+    </sql>
+
+    <select id="selectHpBannerImageList" parameterType="HpBannerImage" resultMap="HpBannerImageResult">
+        <include refid="selectHpBannerImageVo"/>
+        <where>
+            <if test="id != null ">and id = #{id}</if>
+            <if test="url != null  and url != ''">and url = #{url}</if>
+        </where>
+    </select>
+
+    <select id="selectHpBannerImageById" parameterType="Long" resultMap="HpBannerImageResult">
+        <include refid="selectHpBannerImageVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertHpBannerImage" parameterType="HpBannerImage" useGeneratedKeys="true" keyProperty="id">
+        insert into hp_banner_image
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="url != null and url != ''">url,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="url != null and url != ''">#{url},</if>
+        </trim>
+    </insert>
+
+    <update id="updateHpBannerImage" parameterType="HpBannerImage">
+        update hp_banner_image
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="url != null and url != ''">url = #{url},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHpBannerImageById" parameterType="Long">
+        delete
+        from hp_banner_image
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteHpBannerImageByIds" parameterType="String">
+        delete from hp_banner_image where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

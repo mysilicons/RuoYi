@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.hpcollection.mapper.HpCollectionMapper">
+
+    <resultMap type="HpCollection" id="HpCollectionResult">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="classification2Id" column="classification2_id"/>
+        <result property="classification2Name" column="classification2_name"/>
+        <result property="serviceId" column="service_id"/>
+        <result property="name" column="name"/>
+        <result property="price" column="price"/>
+        <result property="image" column="image"/>
+    </resultMap>
+
+    <sql id="selectHpCollectionVo">
+        select id,
+               user_id,
+               classification2_id,
+               classification2_name,
+               service_id,
+               name,
+               price,
+               image
+        from hp_collection
+    </sql>
+
+    <select id="selectHpCollectionList" parameterType="HpCollection" resultMap="HpCollectionResult">
+        <include refid="selectHpCollectionVo"/>
+        <where>
+            <if test="id != null ">and id = #{id}</if>
+            <if test="userId != null ">and user_id = #{userId}</if>
+            <if test="classification2Id != null ">and classification2_id = #{classification2Id}</if>
+            <if test="classification2Name != null  and classification2Name != ''">and classification2_name like
+                concat('%', #{classification2Name}, '%')
+            </if>
+            <if test="serviceId != null ">and service_id = #{serviceId}</if>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="price != null ">and price = #{price}</if>
+            <if test="image != null  and image != ''">and image = #{image}</if>
+        </where>
+    </select>
+
+    <select id="selectHpCollectionById" parameterType="Long" resultMap="HpCollectionResult">
+        <include refid="selectHpCollectionVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertHpCollection" parameterType="HpCollection" useGeneratedKeys="true" keyProperty="id">
+        insert into hp_collection
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="classification2Id != null">classification2_id,</if>
+            <if test="classification2Name != null and classification2Name != ''">classification2_name,</if>
+            <if test="serviceId != null">service_id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="price != null">price,</if>
+            <if test="image != null and image != ''">image,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="classification2Id != null">#{classification2Id},</if>
+            <if test="classification2Name != null and classification2Name != ''">#{classification2Name},</if>
+            <if test="serviceId != null">#{serviceId},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="price != null">#{price},</if>
+            <if test="image != null and image != ''">#{image},</if>
+        </trim>
+    </insert>
+
+    <update id="updateHpCollection" parameterType="HpCollection">
+        update hp_collection
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="classification2Id != null">classification2_id = #{classification2Id},</if>
+            <if test="classification2Name != null and classification2Name != ''">classification2_name =
+                #{classification2Name},
+            </if>
+            <if test="serviceId != null">service_id = #{serviceId},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="image != null and image != ''">image = #{image},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHpCollectionById" parameterType="Long">
+        delete
+        from hp_collection
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteHpCollectionByIds" parameterType="String">
+        delete from hp_collection where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

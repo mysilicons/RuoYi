@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.hpaddress.mapper.HpAddressMapper">
+
+    <resultMap type="HpAddress" id="HpAddressResult">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="uname" column="uname"/>
+        <result property="phone" column="phone"/>
+        <result property="address" column="address"/>
+    </resultMap>
+
+    <sql id="selectHpAddressVo">
+        select id, user_id, uname, phone, address
+        from hp_address
+    </sql>
+
+    <select id="selectHpAddressList" parameterType="HpAddress" resultMap="HpAddressResult">
+        <include refid="selectHpAddressVo"/>
+        <where>
+            <if test="id != null ">and id = #{id}</if>
+            <if test="userId != null ">and user_id = #{userId}</if>
+            <if test="uname != null  and uname != ''">and uname like concat('%', #{uname}, '%')</if>
+            <if test="phone != null  and phone != ''">and phone = #{phone}</if>
+            <if test="address != null  and address != ''">and address like concat('%', #{address}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectHpAddressById" parameterType="Long" resultMap="HpAddressResult">
+        <include refid="selectHpAddressVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertHpAddress" parameterType="HpAddress" useGeneratedKeys="true" keyProperty="id">
+        insert into hp_address
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="uname != null and uname != ''">uname,</if>
+            <if test="phone != null and phone != ''">phone,</if>
+            <if test="address != null and address != ''">address,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="uname != null and uname != ''">#{uname},</if>
+            <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="address != null and address != ''">#{address},</if>
+        </trim>
+    </insert>
+
+    <update id="updateHpAddress" parameterType="HpAddress">
+        update hp_address
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="uname != null and uname != ''">uname = #{uname},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="address != null and address != ''">address = #{address},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHpAddressById" parameterType="Long">
+        delete
+        from hp_address
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteHpAddressByIds" parameterType="String">
+        delete from hp_address where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

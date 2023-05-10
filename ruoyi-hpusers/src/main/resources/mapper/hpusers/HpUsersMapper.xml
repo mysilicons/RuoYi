@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.hpusers.mapper.HpUsersMapper">
+
+    <resultMap type="HpUsers" id="HpUsersResult">
+        <result property="id" column="id"/>
+        <result property="uname" column="uname"/>
+        <result property="pwd" column="pwd"/>
+    </resultMap>
+
+    <sql id="selectHpUsersVo">
+        select id, uname, pwd
+        from hp_users
+    </sql>
+
+    <select id="selectHpUsersList" parameterType="HpUsers" resultMap="HpUsersResult">
+        <include refid="selectHpUsersVo"/>
+        <where>
+            <if test="id != null ">and id = #{id}</if>
+            <if test="uname != null  and uname != ''">and uname = #{uname}</if>
+            <if test="pwd != null  and pwd != ''">and pwd = #{pwd}</if>
+        </where>
+    </select>
+
+    <select id="selectHpUsersById" parameterType="Long" resultMap="HpUsersResult">
+        <include refid="selectHpUsersVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertHpUsers" parameterType="HpUsers" useGeneratedKeys="true" keyProperty="id">
+        insert into hp_users
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uname != null and uname != ''">uname,</if>
+            <if test="pwd != null and pwd != ''">pwd,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uname != null and uname != ''">#{uname},</if>
+            <if test="pwd != null and pwd != ''">#{pwd},</if>
+        </trim>
+    </insert>
+
+    <update id="updateHpUsers" parameterType="HpUsers">
+        update hp_users
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uname != null and uname != ''">uname = #{uname},</if>
+            <if test="pwd != null and pwd != ''">pwd = #{pwd},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHpUsersById" parameterType="Long">
+        delete
+        from hp_users
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteHpUsersByIds" parameterType="String">
+        delete from hp_users where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

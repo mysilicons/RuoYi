@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.hpservice.mapper.HpServiceMapper">
+
+    <resultMap type="HpService" id="HpServiceResult">
+        <result property="id" column="id"/>
+        <result property="classification1" column="classification1"/>
+        <result property="classification2" column="classification2"/>
+        <result property="imageUrl" column="image_url"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="price" column="price"/>
+        <result property="city" column="city"/>
+        <result property="merchantId" column="merchant_id"/>
+    </resultMap>
+
+    <sql id="selectHpServiceVo">
+        select id,
+               classification1,
+               classification2,
+               image_url,
+               title,
+               content,
+               price,
+               city,
+               merchant_id
+        from hp_service
+    </sql>
+
+    <select id="selectHpServiceList" parameterType="HpService" resultMap="HpServiceResult">
+        <include refid="selectHpServiceVo"/>
+        <where>
+            <if test="id != null ">and id = #{id}</if>
+            <if test="classification1 != null ">and classification1 = #{classification1}</if>
+            <if test="classification2 != null ">and classification2 like concat('%', #{classification2}, '%')</if>
+            <if test="imageUrl != null  and imageUrl != ''">and image_url = #{imageUrl}</if>
+            <if test="title != null  and title != ''">and title like concat('%', #{title}, '%')</if>
+            <if test="content != null  and content != ''">and content like concat('%', #{content}, '%')</if>
+            <if test="price != null  and price != ''">and price = #{price}</if>
+            <if test="city != null  and city != ''">and city like concat('%', #{city}, '%')</if>
+            <if test="merchantId != null ">and merchant_id = #{merchantId}</if>
+        </where>
+    </select>
+
+    <select id="selectHpServiceById" parameterType="Long" resultMap="HpServiceResult">
+        <include refid="selectHpServiceVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertHpService" parameterType="HpService" useGeneratedKeys="true" keyProperty="id">
+        insert into hp_service
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="classification1 != null">classification1,</if>
+            <if test="classification2 != null">classification2,</if>
+            <if test="imageUrl != null and imageUrl != ''">image_url,</if>
+            <if test="title != null and title != ''">title,</if>
+            <if test="content != null and content != ''">content,</if>
+            <if test="price != null and price != ''">price,</if>
+            <if test="city != null and city != ''">city,</if>
+            <if test="merchantId != null">merchant_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="classification1 != null">#{classification1},</if>
+            <if test="classification2 != null">#{classification2},</if>
+            <if test="imageUrl != null and imageUrl != ''">#{imageUrl},</if>
+            <if test="title != null and title != ''">#{title},</if>
+            <if test="content != null and content != ''">#{content},</if>
+            <if test="price != null and price != ''">#{price},</if>
+            <if test="city != null and city != ''">#{city},</if>
+            <if test="merchantId != null">#{merchantId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateHpService" parameterType="HpService">
+        update hp_service
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="classification1 != null">classification1 = #{classification1},</if>
+            <if test="classification2 != null">classification2 = #{classification2},</if>
+            <if test="imageUrl != null and imageUrl != ''">image_url = #{imageUrl},</if>
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="content != null and content != ''">content = #{content},</if>
+            <if test="price != null and price != ''">price = #{price},</if>
+            <if test="city != null and city != ''">city = #{city},</if>
+            <if test="merchantId != null">merchant_id = #{merchantId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHpServiceById" parameterType="Long">
+        delete
+        from hp_service
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteHpServiceByIds" parameterType="String">
+        delete from hp_service where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

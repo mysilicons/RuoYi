@@ -183,6 +183,69 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <!-- 用户管理-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-hpusers</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
+            <!-- 服务管理-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-hpservice</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
+            <!-- 订单管理-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-hporders</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
+            <!-- 商家管理-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-hpmerchant</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
+            <!-- 评论管理-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-hpcomment</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
+            <!-- 收藏管理-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-hpcollection</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
+            <!-- 分类管理-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-hpclassification</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
+            <!-- 轮播图管理-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-hpbannerimage</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
+            <!-- 地址管理-->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-hpaddress</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -193,6 +256,15 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
+        <module>ruoyi-hpusers</module>
+        <module>ruoyi-hpservice</module>
+        <module>ruoyi-hporders</module>
+        <module>ruoyi-hpmerchant</module>
+        <module>ruoyi-hpcomment</module>
+        <module>ruoyi-hpcollection</module>
+        <module>ruoyi-hpclassification</module>
+        <module>ruoyi-hpbannerimage</module>
+        <module>ruoyi-hpaddress</module>
     </modules>
     <packaging>pom</packaging>
 

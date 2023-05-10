@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.hpclassification.mapper.HpClassificationMapper">
+
+    <resultMap type="HpClassification" id="HpClassificationResult">
+        <result property="id" column="id"/>
+        <result property="classification1Id" column="classification1_id"/>
+        <result property="classification1Name" column="classification1_name"/>
+        <result property="classification2Id" column="classification2_id"/>
+        <result property="classification2Name" column="classification2_name"/>
+    </resultMap>
+
+    <sql id="selectHpClassificationVo">
+        select id, classification1_id, classification1_name, classification2_id, classification2_name
+        from hp_classification
+    </sql>
+
+    <select id="selectHpClassificationList" parameterType="HpClassification" resultMap="HpClassificationResult">
+        <include refid="selectHpClassificationVo"/>
+        <where>
+            <if test="id != null ">and id = #{id}</if>
+            <if test="classification1Id != null ">and classification1_id = #{classification1Id}</if>
+            <if test="classification1Name != null  and classification1Name != ''">and classification1_name like
+                concat('%', #{classification1Name}, '%')
+            </if>
+            <if test="classification2Id != null ">and classification2_id = #{classification2Id}</if>
+            <if test="classification2Name != null  and classification2Name != ''">and classification2_name like
+                concat('%', #{classification2Name}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectHpClassificationById" parameterType="Long" resultMap="HpClassificationResult">
+        <include refid="selectHpClassificationVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertHpClassification" parameterType="HpClassification" useGeneratedKeys="true" keyProperty="id">
+        insert into hp_classification
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="classification1Id != null">classification1_id,</if>
+            <if test="classification1Name != null and classification1Name != ''">classification1_name,</if>
+            <if test="classification2Id != null">classification2_id,</if>
+            <if test="classification2Name != null and classification2Name != ''">classification2_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="classification1Id != null">#{classification1Id},</if>
+            <if test="classification1Name != null and classification1Name != ''">#{classification1Name},</if>
+            <if test="classification2Id != null">#{classification2Id},</if>
+            <if test="classification2Name != null and classification2Name != ''">#{classification2Name},</if>
+        </trim>
+    </insert>
+
+    <update id="updateHpClassification" parameterType="HpClassification">
+        update hp_classification
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="classification1Id != null">classification1_id = #{classification1Id},</if>
+            <if test="classification1Name != null and classification1Name != ''">classification1_name =
+                #{classification1Name},
+            </if>
+            <if test="classification2Id != null">classification2_id = #{classification2Id},</if>
+            <if test="classification2Name != null and classification2Name != ''">classification2_name =
+                #{classification2Name},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHpClassificationById" parameterType="Long">
+        delete
+        from hp_classification
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteHpClassificationByIds" parameterType="String">
+        delete from hp_classification where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

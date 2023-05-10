@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.hpmerchant.mapper.HpMerchantMapper">
+
+    <resultMap type="HpMerchant" id="HpMerchantResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+        <result property="token" column="token"/>
+    </resultMap>
+
+    <sql id="selectHpMerchantVo">
+        select id, name, password, token
+        from hp_merchant
+    </sql>
+
+    <select id="selectHpMerchantList" parameterType="HpMerchant" resultMap="HpMerchantResult">
+        <include refid="selectHpMerchantVo"/>
+        <where>
+            <if test="id != null ">and id = #{id}</if>
+            <if test="name != null  and name != ''">and name = #{name}</if>
+            <if test="password != null  and password != ''">and password = #{password}</if>
+            <if test="token != null  and token != ''">and token = #{token}</if>
+        </where>
+    </select>
+
+    <select id="selectHpMerchantById" parameterType="Long" resultMap="HpMerchantResult">
+        <include refid="selectHpMerchantVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertHpMerchant" parameterType="HpMerchant" useGeneratedKeys="true" keyProperty="id">
+        insert into hp_merchant
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="password != null and password != ''">password,</if>
+            <if test="token != null and token != ''">token,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="password != null and password != ''">#{password},</if>
+            <if test="token != null and token != ''">#{token},</if>
+        </trim>
+    </insert>
+
+    <update id="updateHpMerchant" parameterType="HpMerchant">
+        update hp_merchant
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="password != null and password != ''">password = #{password},</if>
+            <if test="token != null and token != ''">token = #{token},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHpMerchantById" parameterType="Long">
+        delete
+        from hp_merchant
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteHpMerchantByIds" parameterType="String">
+        delete from hp_merchant where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

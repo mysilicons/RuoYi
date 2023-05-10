@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.hporders.mapper.HpOrdersMapper">
+
+    <resultMap type="HpOrders" id="HpOrdersResult">
+        <result property="id" column="id"/>
+        <result property="orderNumber" column="order_number"/>
+        <result property="userId" column="user_id"/>
+        <result property="merchantId" column="merchant_id"/>
+        <result property="addressId" column="address_id"/>
+        <result property="classification2Id" column="classification2_id"/>
+        <result property="classification2Name" column="classification2_name"/>
+        <result property="serviceId" column="service_id"/>
+        <result property="name" column="name"/>
+        <result property="content" column="content"/>
+        <result property="price" column="price"/>
+        <result property="image" column="image"/>
+        <result property="orderTime" column="order_time"/>
+        <result property="serverTime" column="server_time"/>
+        <result property="curStatus" column="cur_status"/>
+        <result property="username" column="username"/>
+        <result property="phone" column="phone"/>
+        <result property="address" column="address"/>
+        <result property="userVisible" column="user_visible"/>
+        <result property="merchantVisible" column="merchant_visible"/>
+    </resultMap>
+
+    <sql id="selectHpOrdersVo">
+        select id,
+               order_number,
+               user_id,
+               merchant_id,
+               address_id,
+               classification2_id,
+               classification2_name,
+               service_id,
+               name,
+               content,
+               price,
+               image,
+               order_time,
+               server_time,
+               cur_status,
+               username,
+               phone,
+               address,
+               user_visible,
+               merchant_visible
+        from hp_orders
+    </sql>
+
+    <select id="selectHpOrdersList" parameterType="HpOrders" resultMap="HpOrdersResult">
+        <include refid="selectHpOrdersVo"/>
+        <where>
+            <if test="id != null ">and id = #{id}</if>
+            <if test="orderNumber != null  and orderNumber != ''">and order_number = #{orderNumber}</if>
+            <if test="userId != null ">and user_id = #{userId}</if>
+            <if test="merchantId != null ">and merchant_id = #{merchantId}</if>
+            <if test="addressId != null ">and address_id = #{addressId}</if>
+            <if test="classification2Id != null ">and classification2_id = #{classification2Id}</if>
+            <if test="classification2Name != null  and classification2Name != ''">and classification2_name like
+                concat('%', #{classification2Name}, '%')
+            </if>
+            <if test="serviceId != null ">and service_id = #{serviceId}</if>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="content != null  and content != ''">and content like concat('%', #{content}, '%')</if>
+            <if test="price != null  and price != ''">and price = #{price}</if>
+            <if test="image != null  and image != ''">and image = #{image}</if>
+            <if test="orderTime != null ">and order_time = #{orderTime}</if>
+            <if test="serverTime != null  and serverTime != ''">and server_time = #{serverTime}</if>
+            <if test="curStatus != null  and curStatus != ''">and cur_status = #{curStatus}</if>
+            <if test="username != null  and username != ''">and username like concat('%', #{username}, '%')</if>
+            <if test="phone != null  and phone != ''">and phone = #{phone}</if>
+            <if test="address != null  and address != ''">and address like concat('%', #{address}, '%')</if>
+            <if test="userVisible != null ">and user_visible = #{userVisible}</if>
+            <if test="merchantVisible != null ">and merchant_visible = #{merchantVisible}</if>
+        </where>
+    </select>
+
+    <select id="selectHpOrdersById" parameterType="Long" resultMap="HpOrdersResult">
+        <include refid="selectHpOrdersVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertHpOrders" parameterType="HpOrders" useGeneratedKeys="true" keyProperty="id">
+        insert into hp_orders
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderNumber != null and orderNumber != ''">order_number,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="merchantId != null">merchant_id,</if>
+            <if test="addressId != null">address_id,</if>
+            <if test="classification2Id != null">classification2_id,</if>
+            <if test="classification2Name != null and classification2Name != ''">classification2_name,</if>
+            <if test="serviceId != null">service_id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="content != null and content != ''">content,</if>
+            <if test="price != null and price != ''">price,</if>
+            <if test="image != null and image != ''">image,</if>
+            <if test="orderTime != null">order_time,</if>
+            <if test="serverTime != null and serverTime != ''">server_time,</if>
+            <if test="curStatus != null and curStatus != ''">cur_status,</if>
+            <if test="username != null and username != ''">username,</if>
+            <if test="phone != null and phone != ''">phone,</if>
+            <if test="address != null and address != ''">address,</if>
+            <if test="userVisible != null">user_visible,</if>
+            <if test="merchantVisible != null">merchant_visible,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderNumber != null and orderNumber != ''">#{orderNumber},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="merchantId != null">#{merchantId},</if>
+            <if test="addressId != null">#{addressId},</if>
+            <if test="classification2Id != null">#{classification2Id},</if>
+            <if test="classification2Name != null and classification2Name != ''">#{classification2Name},</if>
+            <if test="serviceId != null">#{serviceId},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="content != null and content != ''">#{content},</if>
+            <if test="price != null and price != ''">#{price},</if>
+            <if test="image != null and image != ''">#{image},</if>
+            <if test="orderTime != null">#{orderTime},</if>
+            <if test="serverTime != null and serverTime != ''">#{serverTime},</if>
+            <if test="curStatus != null and curStatus != ''">#{curStatus},</if>
+            <if test="username != null and username != ''">#{username},</if>
+            <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="address != null and address != ''">#{address},</if>
+            <if test="userVisible != null">#{userVisible},</if>
+            <if test="merchantVisible != null">#{merchantVisible},</if>
+        </trim>
+    </insert>
+
+    <update id="updateHpOrders" parameterType="HpOrders">
+        update hp_orders
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderNumber != null and orderNumber != ''">order_number = #{orderNumber},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="merchantId != null">merchant_id = #{merchantId},</if>
+            <if test="addressId != null">address_id = #{addressId},</if>
+            <if test="classification2Id != null">classification2_id = #{classification2Id},</if>
+            <if test="classification2Name != null and classification2Name != ''">classification2_name =
+                #{classification2Name},
+            </if>
+            <if test="serviceId != null">service_id = #{serviceId},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="content != null and content != ''">content = #{content},</if>
+            <if test="price != null and price != ''">price = #{price},</if>
+            <if test="image != null and image != ''">image = #{image},</if>
+            <if test="orderTime != null">order_time = #{orderTime},</if>
+            <if test="serverTime != null and serverTime != ''">server_time = #{serverTime},</if>
+            <if test="curStatus != null and curStatus != ''">cur_status = #{curStatus},</if>
+            <if test="username != null and username != ''">username = #{username},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="address != null and address != ''">address = #{address},</if>
+            <if test="userVisible != null">user_visible = #{userVisible},</if>
+            <if test="merchantVisible != null">merchant_visible = #{merchantVisible},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHpOrdersById" parameterType="Long">
+        delete
+        from hp_orders
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteHpOrdersByIds" parameterType="String">
+        delete from hp_orders where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -67,6 +67,60 @@
             <artifactId>ruoyi-generator</artifactId>
         </dependency>
 
+        <!-- 用户管理-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-hpusers</artifactId>
+        </dependency>
+
+        <!-- 服务管理-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-hpservice</artifactId>
+        </dependency>
+
+        <!-- 订单管理-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-hporders</artifactId>
+        </dependency>
+
+        <!-- 商家管理-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-hpmerchant</artifactId>
+        </dependency>
+
+        <!-- 评论管理-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-hpcomment</artifactId>
+        </dependency>
+
+        <!-- 收藏管理-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-hpcollection</artifactId>
+        </dependency>
+
+        <!-- 分类管理-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-hpclassification</artifactId>
+        </dependency>
+
+        <!-- 轮播图管理-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-hpbannerimage</artifactId>
+        </dependency>
+
+        <!-- 地址管理-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-hpaddress</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
