@@ -11,6 +11,14 @@
 * [管理员端](https://github.com/mysilicons/RuoYi)
 * [后台SpringBoot](https://github.com/mysilicons/LoginServer)
 
+## 本项目环境
+
+* JDK17
+* Maven3.8.1
+* MySQL8.0.25
+* IDEA2023.1.1
+* 其余环境见[RuoYi](https://ruoyi.vip/)
+
 ## 管理员端运行方法
 
 1. 安装JDK17
